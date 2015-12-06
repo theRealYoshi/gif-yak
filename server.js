@@ -1,19 +1,33 @@
+// Babel ES6/JSX Compiler
 require('babel-core/register');
+
 
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-// Babel ES6/JSX Compiler
+var mongoose = require('mongoose');
+var Character = require('./models/character');
+var async = require('async');
+var request = require('request');
+var xml2js = require('xml2js');
 
 var swig  = require('swig');
 var React = require('react');
 var ReactDOM = require('react-dom/server');
 var Router = require('react-router');
 var routes = require('./app/routes');
+var config = require('./config');
+
+
 
 var app = express();
+
+mongoose.connect(config.database);
+mongoose.connection.on('error', function() {
+  console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+});
 
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
