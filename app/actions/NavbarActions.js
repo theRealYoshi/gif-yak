@@ -4,14 +4,29 @@ import {assign} from 'underscore';
 class NavbarActions {
   constructor() {
     this.generateActions(
-      'updateOnlineUsers',
-      'updateAjaxAnimation',
       'updateSearchQuery',
+      'updateAjaxAnimation',
+      'getGiphySuccess',
+      'getGiphyFail',
       'getCharacterCountSuccess',
       'getCharacterCountFail',
       'findCharacterSuccess',
       'findCharacterFail'
     );
+  }
+  //find images based off Giphy or Redis
+  findGif(payload){
+    $.ajax({
+      url: '/api/gifs/search', // change this
+      data: { email: payload.searchQuery }
+    })
+      .done((data) => {
+        assign(payload, data);
+        this.actions.getGiphySuccess(payload);
+      })
+      .fail(() => {
+        this.actions.getGiphyFail(payload);
+      });
   }
 
   findCharacter(payload) {

@@ -35,6 +35,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
+/**
+ * GET /api/characters
+ * Returns 2 random characters of the same gender that have not been voted yet.
+ */
+app.get('/api/gifs', function(req, res, next) {
+  var choices = ['Female', 'Male'];
+  var randomGender = _.sample(choices);
+
+  console.log("Server here");
+  console.log(req);
+});
+
+
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
     if (err) {
