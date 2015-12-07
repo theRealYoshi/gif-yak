@@ -27,10 +27,6 @@ if (process.env.REDISTOGO_URL) {
 } else {
     var redis = require("redis").createClient();
 }
-
-// dictionary of giphy terms
-var dictionary = require('./public/dictionary.js');
-
 // Connect to Redis server
 redis.on('connect', function() {
     console.log('connected to Redis');
@@ -38,6 +34,14 @@ redis.on('connect', function() {
 // error handlers
 redis.on('error', function (err) {
   console.log('Error ' + err);
+});
+
+// dictionary of giphy terms
+var cloudinary = require('cloudinary');
+cloudinary.config({
+  cloud_name: 'dts9d9zod',
+  api_key: '396815741769687',
+  api_secret: 'XLhlmK8czr5U81H-zgF_yQLbldg'
 });
 
 var app = express();
@@ -75,6 +79,9 @@ app.get('/api/gifs/search', function(req, res, next) {
   redis.exists(emailLookup, function(err, reply){
     if (reply === 1){
       console.log("does exist");
+      redis.get(emailLookup, function(err, reply) {
+          console.log(reply);
+      });
     } else {
       // var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5";
       console.log("doesn't exist");
@@ -82,9 +89,13 @@ app.get('/api/gifs/search', function(req, res, next) {
       var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly"]
       var celeb = celebs[Math.floor(Math.random()*celebs.length)];
       var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=5";
-      makeGiphyCall(giphyUrl, function(results){
+      giphyCall(giphyUrl, function(results){
+        // if hash map empty
         console.log(results);
+        redis.set(emailLookup, results); // stores giphy data object
+        redis.expire(emailLookup, 60); // expires after one minute
       });
+      //store results in redis
     }
   })
 
@@ -94,9 +105,8 @@ app.get('/api/gifs/search', function(req, res, next) {
   // save results in redis and return callback
 });
 
-var makeGiphyCall = function(url, callback){
+var giphyCall = function(url, callback){
   request.get(url,function(error, response, body) {
-    console.log(url);
     if (!error && response.statusCode == 200) {
       callback(body);
     } else {
