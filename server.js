@@ -20,7 +20,23 @@ var Router = require('react-router');
 var routes = require('./app/routes');
 var config = require('./config');
 
+// Redis
+if (process.env.REDISTOGO_URL) {
+    var rtg   = require("url").parse(process.env.REDISTOGO_URL);
+    var redis = require("redis").createClient(rtg.port, rtg.hostname);
+    redis.auth(rtg.auth.split(":")[1]);
+} else {
+    var redis = require("redis").createClient();
+}
 
+// Connect to Redis server
+redis.on('connect', function() {
+    console.log('connected to Redis');
+});
+// error handlers
+redis.on('error', function (err) {
+  console.log('Error ' + err);
+});
 
 var app = express();
 
@@ -46,6 +62,39 @@ app.get('/api/gifs', function(req, res, next) {
   console.log("Server here");
   console.log(req);
 });
+
+/**
+ * GET /api/gifs/search
+ * Looks up a character by name. (case-insensitive)
+ */
+app.get('/api/gifs/search', function(req, res, next) {
+  var emailLookup = new RegExp(req.query.email, 'i');
+  // var gifTag = assignRandomTag(emailLookup);
+  // var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5";
+  console.log(emailLookup);
+  makeGiphyCall(function(results){
+    console.log(results);
+  });
+  // assign random term
+  //find in redis cache first
+  // if not in redis cache then make request to giphy api
+  // save results in redis and return callback
+});
+
+var makeGiphyCall = function(callback){
+  var data;
+  request.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5",function(error, response, body) {
+    console.log("running");
+    if (!error && response.statusCode == 200) {
+      callback(body); // Show the HTML for the Google homepage.
+    } else {
+      callback(error);
+    }
+  });
+
+}
+
+// use image fetch
 
 
 app.use(function(req, res) {

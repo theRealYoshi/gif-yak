@@ -69,7 +69,7 @@ class Navbar extends React.Component {
               <div className='tri'></div>
               <div className='tri invert'></div>
             </span>
-            GIF YAKKER
+            GIF YAK
           </Link>
         </div>
         <div id='navbar' className='navbar-collapse collapse'>
