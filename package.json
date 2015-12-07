@@ -1,10 +1,10 @@
 {
-  "name": "newedenfaces",
-  "description": "Character voting app for EVE Online",
+  "name": "Gif-Yak",
+  "description": "Gif Yakking App",
   "version": "1.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/sahat/newedenfaces-react"
+    "url": ""
   },
   "main": "server.js",
   "scripts": {

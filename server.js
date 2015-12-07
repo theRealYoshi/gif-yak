@@ -39,11 +39,11 @@ redis.on('error', function (err) {
 });
 
 var app = express();
-
-mongoose.connect(config.database);
-mongoose.connection.on('error', function() {
-  console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
-});
+//
+// mongoose.connect(config.database);
+// mongoose.connection.on('error', function() {
+//   console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
+// });
 
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
