@@ -28,6 +28,9 @@ if (process.env.REDISTOGO_URL) {
     var redis = require("redis").createClient();
 }
 
+// dictionary of giphy terms
+var dictionary = require('./public/dictionary.js');
+
 // Connect to Redis server
 redis.on('connect', function() {
     console.log('connected to Redis');
@@ -67,25 +70,35 @@ app.get('/api/gifs', function(req, res, next) {
  * Looks up a character by name. (case-insensitive)
  */
 app.get('/api/gifs/search', function(req, res, next) {
-  var emailLookup = new RegExp(req.query.email, 'i');
-  // var gifTag = assignRandomTag(emailLookup);
-  // var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5";
-  console.log(emailLookup);
-  makeGiphyCall(function(results){
-    console.log(results);
-  });
+  var emailLookup = new RegExp(req.query.email);
+
+  redis.exists(emailLookup, function(err, reply){
+    if (reply === 1){
+      console.log("does exist");
+    } else {
+      // var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5";
+      console.log("doesn't exist");
+      console.log(emailLookup);
+      var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly"]
+      var celeb = celebs[Math.floor(Math.random()*celebs.length)];
+      var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=5";
+      makeGiphyCall(giphyUrl, function(results){
+        console.log(results);
+      });
+    }
+  })
+
   // assign random term
   //find in redis cache first
   // if not in redis cache then make request to giphy api
   // save results in redis and return callback
 });
 
-var makeGiphyCall = function(callback){
-  var data;
-  request.get("http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5",function(error, response, body) {
-    console.log("running");
+var makeGiphyCall = function(url, callback){
+  request.get(url,function(error, response, body) {
+    console.log(url);
     if (!error && response.statusCode == 200) {
-      callback(body); // Show the HTML for the Google homepage.
+      callback(body);
     } else {
       callback(error);
     }
