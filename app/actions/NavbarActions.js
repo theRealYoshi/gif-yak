@@ -21,6 +21,7 @@ class NavbarActions {
       data: { email: payload.searchQuery }
     })
       .done((data) => {
+        console.log('ajax success');
         assign(payload, data);
         this.actions.getGiphySuccess(payload);
       })
@@ -28,30 +29,30 @@ class NavbarActions {
         this.actions.getGiphyFail(payload);
       });
   }
-
-  findCharacter(payload) {
-    $.ajax({
-      url: '/api/characters/search',
-      data: { name: payload.searchQuery }
-    })
-      .done((data) => {
-        assign(payload, data);
-        this.actions.findCharacterSuccess(payload);
-      })
-      .fail(() => {
-        this.actions.findCharacterFail(payload);
-      });
-  }
-
-  getCharacterCount() {
-    $.ajax({ url: '/api/characters/count' })
-      .done((data) => {
-        this.actions.getCharacterCountSuccess(data)
-      })
-      .fail((jqXhr) => {
-        this.actions.getCharacterCountFail(jqXhr)
-      });
-  }
+  //
+  // findCharacter(payload) {
+  //   $.ajax({
+  //     url: '/api/characters/search',
+  //     data: { name: payload.searchQuery }
+  //   })
+  //     .done((data) => {
+  //       assign(payload, data);
+  //       this.actions.findCharacterSuccess(payload);
+  //     })
+  //     .fail(() => {
+  //       this.actions.findCharacterFail(payload);
+  //     });
+  // }
+  //
+  // getCharacterCount() {
+  //   $.ajax({ url: '/api/characters/count' })
+  //     .done((data) => {
+  //       this.actions.getCharacterCountSuccess(data)
+  //     })
+  //     .fail((jqXhr) => {
+  //       this.actions.getCharacterCountFail(jqXhr)
+  //     });
+  // }
 }
 
 export default alt.createActions(NavbarActions);

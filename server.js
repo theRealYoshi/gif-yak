@@ -71,37 +71,36 @@ app.get('/api/gifs', function(req, res, next) {
 
 /**
  * GET /api/gifs/search
- * Looks up a character by name. (case-insensitive)
+ * assigns random search tag to email caches result
  */
 app.get('/api/gifs/search', function(req, res, next) {
   var emailLookup = new RegExp(req.query.email);
-
+  var dataReturned;
+  //use asyncwaterfall
+  // use try block
   redis.exists(emailLookup, function(err, reply){
     if (reply === 1){
       console.log("does exist");
-      redis.get(emailLookup, function(err, reply) {
-          console.log(reply);
-      });
+      redis.lrange(emailLookup, 0, -1, function(err, reply){
+        dataReturned = reply;
+      })
     } else {
       // var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5";
       console.log("doesn't exist");
-      console.log(emailLookup);
-      var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly"]
+      var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly"];
       var celeb = celebs[Math.floor(Math.random()*celebs.length)];
       var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=5";
       giphyCall(giphyUrl, function(results){
-        // if hash map empty
-        console.log(results);
-        parseGiphyResult(results);
-        redis.set(emailLookup, results); // stores giphy data object
+        redis.rpush(parseGiphyData(emailLookup, results)); // stores giphy data object
         redis.expire(emailLookup, 60); // expires after one minute
+        redis.lrange(emailLookup, 0, -1, function(err, reply){
+          console.log(reply);
+          dataReturned = reply;
+        })
       });
     }
+    res.send({data: dataReturned})
   })
-
-  // assign random term
-  //find in redis cache first
-  // if not in redis cache then make request to giphy api
   // save results in redis and return callback
 });
 
@@ -115,13 +114,15 @@ var giphyCall = function(url, callback){
   });
 }
 
-var parseGiphyResult = function(results){
+var parseGiphyData = function(emailLookup,results){
   var results = JSON.parse(results);
+  var res = [emailLookup];
   results["data"].forEach(function(img){
     var imgUrl = img['images']['fixed_height']['url'];
-    var cloudUrl = cloudinary.image(imgUrl, {height: 300, type: "fetch", fetch_format: "auto"})
-    console.log(cloudUrl);
-  })
+    var cloudUrl = "http://res.cloudinary.com/dts9d9zod/image/fetch/w_300,h_300,c_fill,f_auto/" + imgUrl;
+    res.push(cloudUrl);
+  });
+  return res;
 }
 
 

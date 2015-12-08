@@ -10,6 +10,14 @@ class NavbarStore {
     this.ajaxAnimationClass = '';
   }
 
+  onGetGiphySuccess(payload) {
+    console.log(payload.data);
+  }
+
+  onFindCharacterSuccess(payload) {
+    payload.history.pushState(null, '/characters/' + payload.characterId);
+  }
+
   onFindCharacterSuccess(payload) {
     payload.history.pushState(null, '/characters/' + payload.characterId);
   }
