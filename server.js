@@ -92,10 +92,10 @@ app.get('/api/gifs/search', function(req, res, next) {
       giphyCall(giphyUrl, function(results){
         // if hash map empty
         console.log(results);
+        parseGiphyResult(results);
         redis.set(emailLookup, results); // stores giphy data object
         redis.expire(emailLookup, 60); // expires after one minute
       });
-      //store results in redis
     }
   })
 
@@ -113,8 +113,18 @@ var giphyCall = function(url, callback){
       callback(error);
     }
   });
-
 }
+
+var parseGiphyResult = function(results){
+  var results = JSON.parse(results);
+  results["data"].forEach(function(img){
+    var imgUrl = img['images']['fixed_height']['url'];
+    var cloudUrl = cloudinary.image(imgUrl, {height: 300, type: "fetch", fetch_format: "auto"})
+    console.log(cloudUrl);
+  })
+}
+
+
 
 // use image fetch
 

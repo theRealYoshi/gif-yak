@@ -54,8 +54,9 @@ class Home extends React.Component {
 
     return (
       <div className='container'>
-        <h3 className='text-center'>Click on the portrait. Select your favorite.</h3>
+        <h3 className='text-center'>Input an email. Click on a Gif.</h3>
         <div className='row'>
+          <img src='http://res.cloudinary.com/dts9d9zod/image/fetch/f_auto,w_300,h_300,c_fill/http://media0.giphy.com/media/26tPrnVRNlPY5lQIw/200.gif' height='300'/>
         </div>
       </div>
     );
