@@ -12,7 +12,6 @@ class Navbar extends React.Component {
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
-    NavbarActions.getCharacterCount();
 
     $(document).ajaxStart(() => {
       NavbarActions.updateAjaxAnimation('fadeIn');
@@ -21,7 +20,7 @@ class Navbar extends React.Component {
     $(document).ajaxComplete(() => {
       setTimeout(() => {
         NavbarActions.updateAjaxAnimation('fadeOut');
-      }, 750);
+      }, 2000);
     });
   }
 
@@ -88,11 +87,6 @@ class Navbar extends React.Component {
               </span>
             </div>
           </form>
-          <ul className='nav navbar-nav'>
-            <li><Link to='/add'>Github</Link></li>
-            <li><Link to='/add'>Linkedin</Link></li>
-            <li><button className='btn btn-default' onClick={this.handleTest.bind(this)}>Test</button></li>
-          </ul>
         </div>
       </nav>
     );

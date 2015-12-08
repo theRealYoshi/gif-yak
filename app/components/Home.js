@@ -37,13 +37,13 @@ class Home extends React.Component {
         <div className='thumbnail fadeInUp animated'>
           <img src={imgSrc} />
         </div>
-      )
+      );
     });
     var header;
     if (this.state.profileImgs.length > 0){
-      header = <div></div>
+      header = <div></div>;
     } else {
-      header = <h3 className='text-center'>Input an email. Click on a Gif.</h3>
+      header = <h3 className='text-center'>Input an email. Click on a Gif.</h3>;
     }
     // var characterNodes = this.state.characters.map((character, index) => {
     //   return (

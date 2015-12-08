@@ -22,7 +22,7 @@ class NavbarStore {
     payload.searchForm.classList.add('shake');
     setTimeout(() => {
       payload.searchForm.classList.remove('shake');
-    }, 1000);
+    }, 500);
   }
 
   onFindCharacterSuccess(payload) {
@@ -31,17 +31,6 @@ class NavbarStore {
 
   onFindCharacterSuccess(payload) {
     payload.history.pushState(null, '/characters/' + payload.characterId);
-  }
-
-  onFindCharacterFail(payload) {
-    payload.searchForm.classList.add('shake');
-    setTimeout(() => {
-      payload.searchForm.classList.remove('shake');
-    }, 1000);
-  }
-
-  onUpdateOnlineUsers(data) {
-    this.onlineUsers = data.onlineUsers;
   }
 
   onUpdateAjaxAnimation(className) {
@@ -50,14 +39,6 @@ class NavbarStore {
 
   onUpdateSearchQuery(event) {
     this.searchQuery = event.target.value;
-  }
-
-  onGetCharacterCountSuccess(data) {
-    this.totalCharacters = data.count;
-  }
-
-  onGetCharacterCountFail(jqXhr) {
-    toastr.error(jqXhr.responseJSON.message);
   }
 }
 
