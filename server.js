@@ -57,17 +57,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-/**
- * GET /api/characters
- * Returns 2 random characters of the same gender that have not been voted yet.
- */
-app.get('/api/gifs', function(req, res, next) {
-  var choices = ['Female', 'Male'];
-  var randomGender = _.sample(choices);
-
-  console.log("Server here");
-  console.log(req);
-});
 
 /**
  * GET /api/gifs/search
@@ -75,44 +64,34 @@ app.get('/api/gifs', function(req, res, next) {
  */
 app.get('/api/gifs/search', function(req, res, next) {
   var emailLookup = new RegExp(req.query.email);
-  var dataReturned;
-  //use asyncwaterfall
+  // add email validation
+  // error handlers
   // use try block
   redis.exists(emailLookup, function(err, reply){
+    console.log("exists")
     if (reply === 1){
-      console.log("does exist");
       redis.lrange(emailLookup, 0, -1, function(err, reply){
-        dataReturned = reply;
+        res.send({data: reply});
       })
     } else {
-      // var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=ryan+gosling&api_key=dc6zaTOxFJmzC&limit=5";
       console.log("doesn't exist");
       var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly"];
       var celeb = celebs[Math.floor(Math.random()*celebs.length)];
       var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=5";
-      giphyCall(giphyUrl, function(results){
-        redis.rpush(parseGiphyData(emailLookup, results)); // stores giphy data object
-        redis.expire(emailLookup, 60); // expires after one minute
-        redis.lrange(emailLookup, 0, -1, function(err, reply){
-          console.log(reply);
-          dataReturned = reply;
-        })
-      });
+      request.get(giphyUrl, function(error,response, body){
+        if (!error && response.statusCode == 200) {
+          redis.rpush(parseGiphyData(emailLookup, body)); // stores giphy data object
+          redis.expire(emailLookup, 60); // expires after one minute
+          redis.lrange(emailLookup, 0, -1, function(err, reply){
+            res.send({data: reply});
+          })
+        } else {
+          res.status(404).send({message: "this request failed"});
+        }
+      })
     }
-    res.send({data: dataReturned})
   })
-  // save results in redis and return callback
 });
-
-var giphyCall = function(url, callback){
-  request.get(url,function(error, response, body) {
-    if (!error && response.statusCode == 200) {
-      callback(body);
-    } else {
-      callback(error);
-    }
-  });
-}
 
 var parseGiphyData = function(emailLookup,results){
   var results = JSON.parse(results);
@@ -128,7 +107,6 @@ var parseGiphyData = function(emailLookup,results){
 
 
 // use image fetch
-
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {

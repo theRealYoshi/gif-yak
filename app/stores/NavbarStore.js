@@ -10,8 +10,17 @@ class NavbarStore {
     this.ajaxAnimationClass = '';
   }
 
+
   onGetGiphySuccess(payload) {
+    console.log("here");
     console.log(payload.data);
+  }
+
+  onGetGiphyFail(payload) {
+    payload.searchForm.classList.add('shake');
+    setTimeout(() => {
+      payload.searchForm.classList.remove('shake');
+    }, 1000);
   }
 
   onFindCharacterSuccess(payload) {

@@ -13,11 +13,13 @@ class Home extends React.Component {
   }
 
   componentDidMount() {
+    NavbarStore.listen(this.onChange);
     HomeStore.listen(this.onChange);
     HomeActions.getTwoCharacters();
   }
 
   componentWillUnmount() {
+    NavbarStore.unlisten(this.onChange);
     HomeStore.unlisten(this.onChange);
   }
 

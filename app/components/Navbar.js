@@ -47,6 +47,13 @@ class Navbar extends React.Component {
     }
   }
 
+  handleTest(event){
+    event.preventDefault();
+    NavbarActions.findTest({
+      test: "this is a test"
+    });
+  }
+
   render() {
     return (
       <nav className='navbar navbar-default navbar-static-top'>
@@ -84,6 +91,7 @@ class Navbar extends React.Component {
           <ul className='nav navbar-nav'>
             <li><Link to='/add'>Github</Link></li>
             <li><Link to='/add'>Linkedin</Link></li>
+            <li><button className='btn btn-default' onClick={this.handleTest.bind(this)}>Test</button></li>
           </ul>
         </div>
       </nav>
