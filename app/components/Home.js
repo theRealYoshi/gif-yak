@@ -1,6 +1,7 @@
 import React from 'react';
 import {Link} from 'react-router';
-import HomeStore from '../stores/HomeStore'
+import HomeStore from '../stores/HomeStore';
+import NavbarStore from '../stores/NavbarStore';
 import HomeActions from '../actions/HomeActions';
 import {first, without, findWhere} from 'underscore';
 
@@ -8,19 +9,16 @@ class Home extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = HomeStore.getState();
+    this.state = NavbarStore.getState();
     this.onChange = this.onChange.bind(this);
   }
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
-    HomeStore.listen(this.onChange);
-    HomeActions.getTwoCharacters();
   }
 
   componentWillUnmount() {
     NavbarStore.unlisten(this.onChange);
-    HomeStore.unlisten(this.onChange);
   }
 
   onChange(state) {
@@ -34,6 +32,19 @@ class Home extends React.Component {
   }
 
   render() {
+    var profileImgs = this.state.profileImgs.map((imgSrc, idx) => {
+      return (
+        <div className='thumbnail fadeInUp animated'>
+          <img src={imgSrc} />
+        </div>
+      )
+    });
+    var header;
+    if (this.state.profileImgs.length > 0){
+      header = <div></div>
+    } else {
+      header = <h3 className='text-center'>Input an email. Click on a Gif.</h3>
+    }
     // var characterNodes = this.state.characters.map((character, index) => {
     //   return (
     //     <div key={character.characterId} className={index === 0 ? 'col-xs-6 col-sm-6 col-md-5 col-md-offset-1' : 'col-xs-6 col-sm-6 col-md-5'}>
@@ -56,9 +67,9 @@ class Home extends React.Component {
 
     return (
       <div className='container'>
-        <h3 className='text-center'>Input an email. Click on a Gif.</h3>
+        {header}
         <div className='row'>
-          <img src='http://res.cloudinary.com/dts9d9zod/image/fetch/f_auto,w_300,h_300,c_fill/http://media0.giphy.com/media/26tPrnVRNlPY5lQIw/200.gif' height='300'/>
+          {profileImgs}
         </div>
       </div>
     );

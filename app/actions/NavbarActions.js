@@ -7,8 +7,6 @@ class NavbarActions {
       'updateSearchQuery',
       'updateAjaxAnimation',
       'getGiphySuccess',
-      'getTestSuccess',
-      'getTestFail',
       'getGiphyFail',
       'getCharacterCountSuccess',
       'getCharacterCountFail',
@@ -24,8 +22,6 @@ class NavbarActions {
       data: { email: payload.searchQuery }
     })
       .done((data) => {
-        console.log('ajax success');
-        console.log(payload);
         assign(payload, data);
         this.actions.getGiphySuccess(payload);
       })

@@ -64,7 +64,9 @@ app.use(express.static(path.join(__dirname, 'public')));
  */
 app.get('/api/gifs/search', function(req, res, next) {
   var emailLookup = new RegExp(req.query.email);
-  // add email validation
+  if (!validateEmail(emailLookup)){
+    return res.status(404).send({message: "not a valid email"});
+  };
   // error handlers
   // use try block
   redis.exists(emailLookup, function(err, reply){
@@ -86,7 +88,7 @@ app.get('/api/gifs/search', function(req, res, next) {
             res.send({data: reply});
           })
         } else {
-          res.status(404).send({message: "this request failed"});
+          res.status(404).send({message: "Giphy failed to provide valid request"});
         }
       })
     }
@@ -102,6 +104,11 @@ var parseGiphyData = function(emailLookup,results){
     res.push(cloudUrl);
   });
   return res;
+}
+
+var validateEmail = function(email) {
+    var re = /\S+@\S+\.\S+/;
+    return re.test(email);
 }
 
 

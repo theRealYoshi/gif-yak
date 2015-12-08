@@ -4,6 +4,7 @@ import NavbarActions from '../actions/NavbarActions';
 class NavbarStore {
   constructor() {
     this.bindActions(NavbarActions);
+    this.profileImgs = [];
     this.totalCharacters = 0;
     this.onlineUsers = 0;
     this.searchQuery = '';
@@ -14,6 +15,7 @@ class NavbarStore {
   onGetGiphySuccess(payload) {
     console.log("here");
     console.log(payload.data);
+    this.profileImgs = payload.data;
   }
 
   onGetGiphyFail(payload) {
