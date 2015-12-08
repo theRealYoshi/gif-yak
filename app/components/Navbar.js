@@ -46,13 +46,6 @@ class Navbar extends React.Component {
     }
   }
 
-  handleTest(event){
-    event.preventDefault();
-    NavbarActions.findTest({
-      test: "this is a test"
-    });
-  }
-
   render() {
     return (
       <nav className='navbar navbar-default navbar-static-top'>

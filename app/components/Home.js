@@ -15,6 +15,16 @@ class Home extends React.Component {
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
+
+    $(document).ajaxStart(() => {
+      NavbarActions.updateAjaxAnimation('fadeIn');
+    });
+
+    $(document).ajaxComplete(() => {
+      setTimeout(() => {
+        NavbarActions.updateAjaxAnimation('fadeOut');
+      }, 2000);
+    });
   }
 
   componentWillUnmount() {
@@ -34,7 +44,7 @@ class Home extends React.Component {
   render() {
     var profileImgs = this.state.profileImgs.map((imgSrc, idx) => {
       return (
-        <div className='thumbnail fadeInUp animated'>
+        <div className='row flipInX animated'>
           <img src={imgSrc} />
         </div>
       );

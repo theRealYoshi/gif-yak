@@ -25,14 +25,6 @@ class NavbarStore {
     }, 500);
   }
 
-  onFindCharacterSuccess(payload) {
-    payload.history.pushState(null, '/characters/' + payload.characterId);
-  }
-
-  onFindCharacterSuccess(payload) {
-    payload.history.pushState(null, '/characters/' + payload.characterId);
-  }
-
   onUpdateAjaxAnimation(className) {
     this.ajaxAnimationClass = className; //fadein or fadeout
   }

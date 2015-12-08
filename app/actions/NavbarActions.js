@@ -12,9 +12,8 @@ class NavbarActions {
   }
   //find images based off Giphy or Redis
   findGif(payload){
-    console.log("sending" + payload);
     $.ajax({
-      url: '/api/gifs/search', // change this
+      url: '/api/gifs/search',
       data: { email: payload.searchQuery }
     })
       .done((data) => {
