@@ -3,6 +3,7 @@ import {Link} from 'react-router';
 import HomeStore from '../stores/HomeStore';
 import NavbarStore from '../stores/NavbarStore';
 import HomeActions from '../actions/HomeActions';
+import ImageTag from './ImageTag';
 import {first, without, findWhere} from 'underscore';
 
 class Home extends React.Component {
@@ -15,16 +16,6 @@ class Home extends React.Component {
 
   componentDidMount() {
     NavbarStore.listen(this.onChange);
-
-    $(document).ajaxStart(() => {
-      NavbarActions.updateAjaxAnimation('fadeIn');
-    });
-
-    $(document).ajaxComplete(() => {
-      setTimeout(() => {
-        NavbarActions.updateAjaxAnimation('fadeOut');
-      }, 2000);
-    });
   }
 
   componentWillUnmount() {
@@ -45,7 +36,7 @@ class Home extends React.Component {
     var profileImgs = this.state.profileImgs.map((imgSrc, idx) => {
       return (
         <div className='row flipInX animated'>
-          <img src={imgSrc} />
+          <ImageTag src={imgSrc} />
         </div>
       );
     });

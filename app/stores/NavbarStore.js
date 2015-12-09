@@ -13,8 +13,6 @@ class NavbarStore {
 
 
   onGetGiphySuccess(payload) {
-    console.log("here");
-    console.log(payload.data);
     this.profileImgs = payload.data;
   }
 
