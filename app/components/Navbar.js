@@ -86,7 +86,7 @@ class Navbar extends React.Component {
               </span>
             </div>
           </form>
-          <button className='btn btn-default clear' onClick={this.handleReRender}>Clear Selection</button>
+          <button className='btn btn-default clear' onClick={this.handleReRender}>Clear Search</button>
         </div>
       </nav>
     );

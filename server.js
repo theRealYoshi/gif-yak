@@ -75,7 +75,7 @@ app.get('/api/gifs/search', function(req, res, next) {
         res.send({data: reply});
       })
     } else {
-      var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly", "leonardo-dicaprio","jennifer-lawrence"];
+      var celebs = ["jack-mcbrayer", "morgan+freeman", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly", "leonardo+dicaprio","jennifer+lawrence"];
       var celeb = celebs[Math.floor(Math.random()*celebs.length)];
       var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=10";
       request.get(giphyUrl, function(error,response, body){
