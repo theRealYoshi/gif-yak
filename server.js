@@ -70,13 +70,11 @@ app.get('/api/gifs/search', function(req, res, next) {
   // error handlers
   // use try block
   redis.exists(emailLookup, function(err, reply){
-    console.log("exists")
     if (reply === 1){
       redis.lrange(emailLookup, 0, -1, function(err, reply){
         res.send({data: reply});
       })
     } else {
-      console.log("doesn't exist");
       var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly"];
       var celeb = celebs[Math.floor(Math.random()*celebs.length)];
       var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=5";
@@ -98,6 +96,7 @@ app.get('/api/gifs/search', function(req, res, next) {
 var parseGiphyData = function(emailLookup,results){
   var results = JSON.parse(results);
   var res = [emailLookup];
+  // can map this
   results["data"].forEach(function(img){
     var imgUrl = img['images']['fixed_height']['url'];
     var cloudUrl = "http://res.cloudinary.com/dts9d9zod/image/fetch/w_300,h_300,c_fill,f_auto/" + imgUrl;

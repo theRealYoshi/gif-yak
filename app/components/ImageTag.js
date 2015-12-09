@@ -10,18 +10,15 @@ class ImageTag extends React.Component {
   }
 
   _onImageLoad() {
-    console.log(this);
-    if (this.isMounted()) {
-      this.setState({loaded: true});
-    }
+
   }
 
   componentDidMount() {
-    var imgTag = this.refs.img.getDOMNode();
-    var imgSrc = imgTag.getAttribute('src');
-    var img = new window.Image();
-    img.onload = this._onImageLoad;
-    img.src = imgSrc;
+    // var imgTag = this.refs.img.getDOMNode();
+    // var imgSrc = imgTag.getAttribute('src');
+    // var img = new window.Image();
+    // img.onload = this._onImageLoad;
+    // img.src = imgSrc;
   }
 
   render() {

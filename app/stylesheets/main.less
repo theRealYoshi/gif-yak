@@ -11,7 +11,7 @@
 @link-color: #363f34;
 @link-hover-color: #141718;
 
-@navbar-default-bg: #fff;
+@navbar-default-bg: #30dbbd;
 @navbar-default-link-color: #353f44;
 @navbar-default-link-hover-bg: #f6f7f7;
 @navbar-default-link-active-bg: #f6f7f7;
@@ -63,22 +63,27 @@ img {
   border-radius: 5px;
 }
 
+input.form-control {
+  width: 400px;
+  height: 50px;
+}
+
 footer {
   position: absolute;
   bottom: 0;
   width: 100%;
-  color: #fff;
-  background-color: #3b3f51;
+  color: #0dd5b2;
+  background-color: #fff;
 }
 
 footer a {
-  color: #fff;
-  text-decoration: underline;
+  color: #0dd5b2;
+  text-decoration: none;
 
   &:hover,
   &:focus {
     color: #fff;
-    text-decoration: none;
+    text-decoration: underline;
   }
 }
 
@@ -89,6 +94,11 @@ footer .thumb-md {
   &:hover {
     border-color: rgba(255,255,255,.3);
   }
+}
+
+span.glyphicon {
+    font-size: 1.8em;
+    height: 30px;
 }
 
 .badge-danger {
@@ -102,14 +112,27 @@ footer .thumb-md {
   padding: 2px 5px;
 }
 
-//.navbar-form .input-group-btn .btn-default {
-//  padding: 9px 12px;
-//}
+.navbar-form {
+  position: relative;
+  top: 50%;
+  transform: translateY(-30%);
+}
+
+.navbar-form .input-group-btn .btn-default {
+ padding: 9px 12px;
+}
+
+.navbar-form .input-group .form-control {
+ width: 700px;
+ font-size: 24px;
+ border-radius: 10px 0px 0px 10px;
+}
 
 .input-group-btn:last-child > .btn,
 .input-group-btn:last-child > .btn-group {
   margin-left: 0;
   border-left: 0;
+  border-radius: 0px 10px 10px 0px;
 }
 
 /*
@@ -292,13 +315,27 @@ footer .thumb-md {
 .navbar {
   border: 0;
   box-shadow: 0 2px 2px rgba(0,0,0,.05), 0 1px 0 rgba(0,0,0,.05);
+  height: 100px;
+}
+
+.navbar-header {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .navbar-default .navbar-brand {
   margin-left: 40px;
-  font-size: 20px;
+  font-size: 50px;
   font-weight: 700;
+  color: white;
 }
+
+.navbar-default .navbar-form {
+  margin: 40px;
+}
+
+
 
 .dropdown-menu {
   box-shadow: 0 2px 6px rgba(0,0,0,.1);
@@ -356,7 +393,6 @@ footer .thumb-md {
 .form-control {
   border-color: #cfdadc;
   border-radius: 2px;
-
   &:focus {
     border-color: #24b7e4;
     box-shadow: none;

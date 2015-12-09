@@ -12,8 +12,8 @@ class Footer extends React.Component {
             </div>
             <div className='col-sm-4'>
               <ul className='list-inline'>
-                <li><Link to='/add'>Github</Link></li>
-                <li><Link to='/add'>Linkedin</Link></li>
+                <li><a href='https://github.com/theRealYoshi/'>Github</a></li>
+                <li><a href='https://www.linkedin.com/in/yoshihiroluk'>Linkedin</a></li>
               </ul>
             </div>
           </div>

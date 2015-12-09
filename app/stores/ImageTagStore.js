@@ -7,13 +7,6 @@ class ImageTagStore {
     this.loaded = false;
   }
 
-  onUpdateAjaxAnimation(className) {
-    this.ajaxAnimationClass = className; //fadein or fadeout
-  }
-
-  onUpdateSearchQuery(event) {
-    this.searchQuery = event.target.value;
-  }
 }
 
 export default alt.createStore(ImageTagStore);
