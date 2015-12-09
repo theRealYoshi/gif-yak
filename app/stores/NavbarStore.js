@@ -21,6 +21,7 @@ class NavbarStore {
     setTimeout(() => {
       payload.searchForm.classList.remove('shake');
     }, 500);
+    toastr.error(payload.responseText);
   }
 
   onUpdateAjaxAnimation(className) {

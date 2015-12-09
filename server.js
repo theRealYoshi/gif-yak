@@ -65,7 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.get('/api/gifs/search', function(req, res, next) {
   var emailLookup = new RegExp(req.query.email);
   if (!validateEmail(emailLookup)){
-    return res.status(404).send({message: "not a valid email"});
+    return res.status(404).send("Please enter a valid email address");
   };
   // error handlers
   // use try block
@@ -88,7 +88,7 @@ app.get('/api/gifs/search', function(req, res, next) {
             res.send({data: reply});
           })
         } else {
-          res.status(404).send({message: "Giphy failed to provide valid request"});
+          res.status(404).send("Giphy failed to provide valid request");
         }
       })
     }

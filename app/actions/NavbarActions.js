@@ -20,7 +20,8 @@ class NavbarActions {
         assign(payload, data);
         this.actions.getGiphySuccess(payload);
       })
-      .fail(() => {
+      .fail((data) => {
+        assign(payload, data);
         this.actions.getGiphyFail(payload);
       });
   }
