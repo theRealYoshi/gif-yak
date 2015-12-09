@@ -36,14 +36,19 @@ class Navbar extends React.Component {
     event.preventDefault();
 
     let searchQuery = this.state.searchQuery.trim();
-
     if (searchQuery) {
       NavbarActions.findGif({
         searchQuery: searchQuery,
         searchForm: this.refs.searchForm,
         history: this.props.history
       });
+    } else {
+      NavbarActions.reRenderPage();
     }
+  }
+
+  handleReRender(){
+    NavbarActions.reRenderPage();
   }
 
   render() {
@@ -56,7 +61,7 @@ class Navbar extends React.Component {
             <span className='icon-bar'></span>
             <span className='icon-bar'></span>
           </button>
-          <Link to='/' className='navbar-brand'>
+          <Link to='/' className='navbar-brand' onClick={this.handleReRender}>
             <span ref='triangles' className={'triangles animated ' + this.state.ajaxAnimationClass}>
               <div className='tri invert'></div>
               <div className='tri invert'></div>

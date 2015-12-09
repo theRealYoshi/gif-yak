@@ -31,6 +31,10 @@ class NavbarStore {
   onUpdateSearchQuery(event) {
     this.searchQuery = event.target.value;
   }
+
+  onReRenderPage() {
+    this.profileImgs = [];
+  }
 }
 
 export default alt.createStore(NavbarStore);

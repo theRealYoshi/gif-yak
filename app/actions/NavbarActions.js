@@ -7,7 +7,8 @@ class NavbarActions {
       'updateSearchQuery',
       'updateAjaxAnimation',
       'getGiphySuccess',
-      'getGiphyFail'
+      'getGiphyFail',
+      'reRenderPage'
     );
   }
   //find images based off Giphy or Redis

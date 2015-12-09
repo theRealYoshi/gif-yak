@@ -66,7 +66,7 @@ app.get('/api/gifs/search', function(req, res, next) {
   var emailLookup = new RegExp(req.query.email);
   if (!validateEmail(emailLookup)){
     return res.status(404).send("Please enter a valid email address");
-  };
+  }
   // error handlers
   // use try block
   redis.exists(emailLookup, function(err, reply){
