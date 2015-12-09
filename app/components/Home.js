@@ -35,8 +35,8 @@ class Home extends React.Component {
   render() {
     var profileImgs = this.state.profileImgs.map((imgSrc, idx) => {
       return (
-        <div className='row flipInX animated'>
-          <ImageTag src={imgSrc} />
+        <div className='col-xs-6 .col-md-4 flipInX animated'>
+          <ImageTag src={imgSrc} className="giphy-image"/>
         </div>
       );
     });
@@ -44,7 +44,7 @@ class Home extends React.Component {
     if (this.state.profileImgs.length > 0){
       header = <div></div>;
     } else {
-      header = <h3 className='text-center'>Search for an Email. Through Gifs.</h3>;
+      header = <h1 className='text-center'>Search for an Email. Receive gifs yak.</h1>;
     }
 
     return (
