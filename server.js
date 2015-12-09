@@ -6,8 +6,6 @@ var path = require('path');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
 
-var mongoose = require('mongoose');
-var Character = require('./models/character');
 var async = require('async');
 var request = require('request');
 var xml2js = require('xml2js');
@@ -45,11 +43,6 @@ cloudinary.config({
 });
 
 var app = express();
-//
-// mongoose.connect(config.database);
-// mongoose.connection.on('error', function() {
-//   console.info('Error: Could not connect to MongoDB. Did you forget to run `mongod`?');
-// });
 
 app.set('port', process.env.PORT || 3000);
 app.use(logger('dev'));
@@ -75,7 +68,9 @@ app.get('/api/gifs/search', function(req, res, next) {
         res.send({data: reply});
       })
     } else {
-      var celebs = ["jack-mcbrayer", "morgan+freeman", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly", "leonardo+dicaprio","jennifer+lawrence"];
+      var celebs = ["jack-mcbrayer", "morgan+freeman", "ryan+gosling",
+                    "bill+murray", "olivia+wilde", "minka+kelly",
+                    "leonardo+dicaprio", "paul+rudd","jennifer+lawrence"];
       var celeb = celebs[Math.floor(Math.random()*celebs.length)];
       var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=10";
       request.get(giphyUrl, function(error,response, body){
@@ -96,7 +91,7 @@ app.get('/api/gifs/search', function(req, res, next) {
 var parseGiphyData = function(emailLookup,results){
   var results = JSON.parse(results);
   var res = [emailLookup];
-  // can map this
+  // can map and return
   results["data"].forEach(function(img){
     var imgUrl = img['images']['fixed_height']['url'];
     var cloudUrl = "http://res.cloudinary.com/dts9d9zod/image/fetch/w_200,h_200,c_fill,f_auto/" + imgUrl;
@@ -110,9 +105,6 @@ var validateEmail = function(email) {
     return re.test(email);
 }
 
-
-
-// use image fetch
 
 app.use(function(req, res) {
   Router.match({ routes: routes.default, location: req.url }, function(err, redirectLocation, renderProps) {
