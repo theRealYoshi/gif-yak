@@ -8,7 +8,8 @@ class NavbarActions {
       'updateAjaxAnimation',
       'getGiphySuccess',
       'getGiphyFail',
-      'reRenderPage'
+      'reRenderPage',
+      'clearGifs'
     );
   }
   //find images based off Giphy or Redis

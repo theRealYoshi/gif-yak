@@ -13,7 +13,6 @@ class NavbarStore {
 
 
   onGetGiphySuccess(payload) {
-    console.log(payload);
     this.profileImgs = payload.data;
   }
 
@@ -36,6 +35,10 @@ class NavbarStore {
   onReRenderPage() {
     this.profileImgs = [];
     this.searchQuery = "";
+  }
+
+  onClearGifs() {
+    this.profileImgs = [];
   }
 }
 

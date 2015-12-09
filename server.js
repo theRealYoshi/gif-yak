@@ -75,9 +75,9 @@ app.get('/api/gifs/search', function(req, res, next) {
         res.send({data: reply});
       })
     } else {
-      var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly"];
+      var celebs = ["jim+carrey", "ryan+gosling", "bill+murray", "olivia+wilde", "minka+kelly", "leonardo-dicaprio","jennifer-lawrence"];
       var celeb = celebs[Math.floor(Math.random()*celebs.length)];
-      var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=5";
+      var giphyUrl = "http://api.giphy.com/v1/gifs/search?q=" + celeb + "&api_key=dc6zaTOxFJmzC&limit=10";
       request.get(giphyUrl, function(error,response, body){
         if (!error && response.statusCode == 200) {
           redis.rpush(parseGiphyData(emailLookup, body)); // stores giphy data object
@@ -99,7 +99,7 @@ var parseGiphyData = function(emailLookup,results){
   // can map this
   results["data"].forEach(function(img){
     var imgUrl = img['images']['fixed_height']['url'];
-    var cloudUrl = "http://res.cloudinary.com/dts9d9zod/image/fetch/w_300,h_300,c_fill,f_auto/" + imgUrl;
+    var cloudUrl = "http://res.cloudinary.com/dts9d9zod/image/fetch/w_200,h_200,c_fill,f_auto/" + imgUrl;
     res.push(cloudUrl);
   });
   return res;

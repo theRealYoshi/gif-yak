@@ -37,6 +37,7 @@ class Navbar extends React.Component {
 
     let searchQuery = this.state.searchQuery.trim();
     if (searchQuery) {
+      NavbarActions.clearGifs();
       NavbarActions.findGif({
         searchQuery: searchQuery,
         searchForm: this.refs.searchForm,
