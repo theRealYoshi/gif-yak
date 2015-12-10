@@ -2,7 +2,7 @@
 
 [Gif-Yak][Gif-Yak] - Enter an email, get a gif
 
-[Gif-Yak]: test-gif-yakker.herokuapp.com
+[Gif-Yak]: http://test-gif-yakker.herokuapp.com
 
 ## Description
 
@@ -32,8 +32,7 @@
         })
     ```
   - Gifs pop up using animation flipInX
-    - Record a track:
-      - ![gif_flips](https://cloud.githubusercontent.com/assets/1275250/11703443/0b02694c-9e94-11e5-82d9-fdfba7def4b4.gif)
+    - ![gif_flips](https://cloud.githubusercontent.com/assets/1275250/11703443/0b02694c-9e94-11e5-82d9-fdfba7def4b4.gif)
 
 ## Future implementations
 
